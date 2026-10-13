@@ -2,7 +2,9 @@ name: Release
 
 on:
   push:
+    branches: [main]
     tags: ['v*']
+    paths: [VERSION]
 
 permissions:
   contents: read
@@ -22,12 +24,13 @@ jobs:
       - name: Verify release tag
         env:
           RELEASE_TAG: ${{ github.ref_name }}
+          RELEASE_REF_TYPE: ${{ github.ref_type }}
         run: |
           python - <<'PY'
           import os
           from pathlib import Path
           version = Path('VERSION').read_text().strip()
-          if os.environ['RELEASE_TAG'] != f'v{version}':
+          if os.environ['RELEASE_REF_TYPE'] == 'tag' and os.environ['RELEASE_TAG'] != f'v{version}':
               raise SystemExit('Tag does not match VERSION')
           PY
       - name: Validate and build
@@ -40,8 +43,8 @@ jobs:
           script: |
             const fs = require('fs');
             const path = require('path');
-            const tag = context.ref.replace('refs/tags/', '');
             const version = fs.readFileSync('VERSION', 'utf8').trim();
+            const tag = `v${version}`;
             const changelog = fs.readFileSync('CHANGELOG.md', 'utf8');
             const section = changelog.split(`## ${version} - `)[1];
             const notes = section.slice(section.indexOf('\n') + 1).split('\n## ')[0].trim();
@@ -51,13 +54,13 @@ jobs:
             try {
               release = (await github.rest.repos.getReleaseByTag({...context.repo, tag})).data;
               if (!release.draft) {
-                core.setFailed('Release is already published; do not replace version assets');
+                core.info('Release is already published; preserving immutable version assets');
                 return;
               }
             } catch (error) {
               if (error.status !== 404) throw error;
               release = (await github.rest.repos.createRelease({
-                ...context.repo, tag_name: tag, name: `${tag} — WYD OMS Skills`,
+                ...context.repo, tag_name: tag, target_commitish: context.sha, name: `${tag} — WYD OMS Skills`,
                 body: notes + '\n\n下载 ZIP 或 TAR.GZ，并使用 SHA256SUMS 核对完整性。\n许可：仅允许安装与使用，不授予修改与再分发权。',
                 draft: true, prerelease: false
               })).data;

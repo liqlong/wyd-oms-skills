@@ -1,11 +1,8 @@
 {
   "releaseVersion": "1.0.0",
   "sourceProject": "oms-mcp-server",
-  "sourceCommit": "a3be7cca32ab59a112356c4556e582c11df97712",
-  "sourceSkillChanges": [
-    "skills/oms-return-recovery/SKILL.md",
-    "skills/oms-return-recovery/references/return-operations.md"
-  ],
+  "sourceCommit": "3ff8d6616e641f936171ba6c2837496d4f9e43b6",
+  "sourceSkillChanges": [],
   "snapshotDate": "2026-10-13",
   "files": {
     "skills/oms-attachment-upload/SKILL.md": "50436fa15b01e01daa03b0e88a8d2b3245d545d63c061941fc8bf8feffe974cf",
@@ -29,7 +26,7 @@
     "skills/oms-package-exception/references/work-orders.md": "d32cd531d1bf3b7c0321521872a9b6b4b9c567d9bb93b8b4261d4166c1f986f9",
     "skills/oms-return-recovery/SKILL.md": "d37a8f1f6a1043dda9d9477b7fd594c3ae778c844339fc5caa78e8a8de3d4a10",
     "skills/oms-return-recovery/agents/openai.yaml": "95b637f591663549ff0286445830c967d5c7ee3ea651f761fc50382fe7c04247",
-    "skills/oms-return-recovery/references/return-operations.md": "79ccc7d9c501c80f49ec5b3157c2ada4460290320f936bc8cba68bc85cb0c19e"
+    "skills/oms-return-recovery/references/return-operations.md": "41b91563a7d1ff0fe5899abb7a442843796fdaae3173e65b4b0a11e6473c1a95"
   },
   "sourceFiles": {
     "skills/oms-attachment-upload/SKILL.md": "50436fa15b01e01daa03b0e88a8d2b3245d545d63c061941fc8bf8feffe974cf",
@@ -53,7 +50,7 @@
     "skills/oms-package-exception/references/work-orders.md": "d32cd531d1bf3b7c0321521872a9b6b4b9c567d9bb93b8b4261d4166c1f986f9",
     "skills/oms-return-recovery/SKILL.md": "d37a8f1f6a1043dda9d9477b7fd594c3ae778c844339fc5caa78e8a8de3d4a10",
     "skills/oms-return-recovery/agents/openai.yaml": "95b637f591663549ff0286445830c967d5c7ee3ea651f761fc50382fe7c04247",
-    "skills/oms-return-recovery/references/return-operations.md": "79ccc7d9c501c80f49ec5b3157c2ada4460290320f936bc8cba68bc85cb0c19e"
+    "skills/oms-return-recovery/references/return-operations.md": "41b91563a7d1ff0fe5899abb7a442843796fdaae3173e65b4b0a11e6473c1a95"
   },
   "publicationAdjustments": {
     "skills/oms-order-query/agents/openai.yaml": "Replace example reference number with user-provided reference prompt.",

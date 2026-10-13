@@ -7,6 +7,7 @@
 | 创建退件预报 | `create_oms_return_forecast` | `/openapi/inbound/v1/returnForecast/create` |
 | 预报和入仓查询 | `inbound_return_forecast_query_page` | `/openapi/inbound/v1/returnForecast/queryPage` |
 | 未认领候选及图片 | `inbound_center_query` | `/openapi/inbound/v1/center/query` |
+| 原生图片查看 | `view_oms_return_image` | 招领查询核对归属后，读取返回的原图地址 |
 | 认领 | `claim_oms_return` | `/openapi/inbound/v1/center/receive` |
 | 退件明细与进度 | `inbound_return_query` | `/openapi/inbound/v1/return/query` |
 | 提交客户处置指令 | `process_oms_return` | `/openapi/inbound/v1/return/deal` |
