@@ -1,0 +1,12 @@
+interface:
+  display_name: "OMS 包裹异常工单管家"
+  short_description: "办理包裹拦截、地址更正和调查工单，补齐附件，用户确认后提交并查看处理反馈"
+  default_prompt: "使用 $oms-package-exception 核对订单和附件，整理我需要的包裹异常工单，确认后办理并查询处理进度。"
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "oms"
+      description: "OMS 包裹异常工单创建、提交、查询和附件上传服务"
+      transport: "streamable_http"
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,12 @@
+interface:
+  display_name: "OMS 库存健康管家"
+  short_description: "按近7天动销分析断货风险、补货数量及库龄积压，提出跨仓调拨和清货建议"
+  default_prompt: "使用 $oms-inventory-health 看看哪些SKU快断货、哪些库存压仓超过90天，给出补货和处置建议。"
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "oms"
+      description: "OMS 库存查询和健康分析 MCP 服务"
+      transport: "streamable_http"
+policy:
+  allow_implicit_invocation: true

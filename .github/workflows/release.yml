@@ -1,0 +1,76 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install validation dependencies
+        run: python -m pip install -r requirements-dev.txt
+      - name: Verify release tag
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          version = Path('VERSION').read_text().strip()
+          if os.environ['RELEASE_TAG'] != f'v{version}':
+              raise SystemExit('Tag does not match VERSION')
+          PY
+      - name: Validate and build
+        run: |
+          python scripts/validate_skills.py
+          python scripts/build_release.py
+      - name: Publish release and downloads
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const tag = context.ref.replace('refs/tags/', '');
+            const version = fs.readFileSync('VERSION', 'utf8').trim();
+            const changelog = fs.readFileSync('CHANGELOG.md', 'utf8');
+            const section = changelog.split(`## ${version} - `)[1];
+            const notes = section.slice(section.indexOf('\n') + 1).split('\n## ')[0].trim();
+            const prefix = `wyd-oms-skills-${tag}`;
+            const files = [`${prefix}.zip`, `${prefix}.tar.gz`, 'SHA256SUMS'];
+            let release;
+            try {
+              release = (await github.rest.repos.getReleaseByTag({...context.repo, tag})).data;
+              if (!release.draft) {
+                core.setFailed('Release is already published; do not replace version assets');
+                return;
+              }
+            } catch (error) {
+              if (error.status !== 404) throw error;
+              release = (await github.rest.repos.createRelease({
+                ...context.repo, tag_name: tag, name: `${tag} — WYD OMS Skills`,
+                body: notes + '\n\n下载 ZIP 或 TAR.GZ，并使用 SHA256SUMS 核对完整性。\n许可：仅允许安装与使用，不授予修改与再分发权。',
+                draft: true, prerelease: false
+              })).data;
+            }
+            for (const name of files) {
+              const data = fs.readFileSync(path.join('dist', name));
+              const existing = release.assets.find(asset => asset.name === name);
+              if (existing) await github.rest.repos.deleteReleaseAsset({...context.repo, asset_id: existing.id});
+              await github.rest.repos.uploadReleaseAsset({
+                ...context.repo, release_id: release.id, name, data,
+                headers: {'content-type': 'application/octet-stream', 'content-length': data.length}
+              });
+            }
+            await github.rest.repos.updateRelease({
+              ...context.repo, release_id: release.id, draft: false, make_latest: 'true'
+            });

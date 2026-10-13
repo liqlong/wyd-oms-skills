@@ -1,0 +1,12 @@
+interface:
+  display_name: "OMS 智能入库托管"
+  short_description: "办理入库预约、审核后建单与草稿提交，查看收货上架进度，重复单据由用户决定"
+  default_prompt: "使用 $oms-inbound-managed 帮我整理到仓货物资料，确认后预约并预报SKU，再查询收货上架进度。"
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "oms"
+      description: "OMS 入库创建、提交及只读查询 MCP 服务"
+      transport: "streamable_http"
+policy:
+  allow_implicit_invocation: true

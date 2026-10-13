@@ -1,0 +1,62 @@
+{
+  "releaseVersion": "1.0.0",
+  "sourceProject": "oms-mcp-server",
+  "sourceCommit": "a3be7cca32ab59a112356c4556e582c11df97712",
+  "sourceSkillChanges": [
+    "skills/oms-return-recovery/SKILL.md",
+    "skills/oms-return-recovery/references/return-operations.md"
+  ],
+  "snapshotDate": "2026-10-13",
+  "files": {
+    "skills/oms-attachment-upload/SKILL.md": "50436fa15b01e01daa03b0e88a8d2b3245d545d63c061941fc8bf8feffe974cf",
+    "skills/oms-attachment-upload/agents/openai.yaml": "28b110f7241155896ef3528eb3dcb04fcf3bb9d80b66a83183ae995d83b4bf01",
+    "skills/oms-attachment-upload/scripts/upload_attachment.py": "a184aad8d5c8c7fd59ddc5843bf503f10240e4d2052f279a326443366cc9bdb3",
+    "skills/oms-inbound-managed/SKILL.md": "5e643012f2552057e44686b7756bc9737be0e6dfcf60c7a66e407c8661c21d73",
+    "skills/oms-inbound-managed/agents/openai.yaml": "541ebf2d1ecbf9cff06d75f0bdea518ce96794440920b1860943d33a60ae71ef",
+    "skills/oms-inventory-health/SKILL.md": "137ca3fd0a8436599318cecf895b301a829c8bf676ae7aac1fd8e34856f93c7c",
+    "skills/oms-inventory-health/agents/openai.yaml": "a86d9b6f011f575cfb34e8a11004dd65a5d7efaf59f495aadef734ee433e135e",
+    "skills/oms-order-query/SKILL.md": "0bd4f08f445ad4e4a8a9cbeb0810dcb95643494705e1ca8d202e53b722dcfc8b",
+    "skills/oms-order-query/agents/openai.yaml": "7874168625554e8d59cb842ffb09714328319b1faf8e2c11e83d89fb08dfa448",
+    "skills/oms-order-query/references/order-queries.md": "b12b24e78520c304f39ebf4ef489a24ffbc0a6f2e3c1ab00c9bcf338f9e07e3d",
+    "skills/oms-order-query/references/query-catalog.md": "f12f2e9cd4ab7cce8f5a57293539944f0e08ffc5df3edbf3c8a479905c5ddb5e",
+    "skills/oms-outbound-batch/SKILL.md": "557726c4ef5bbadb1a6f9311084c614a03c6f07e00c8a6e16fb97feec5ef20aa",
+    "skills/oms-outbound-batch/agents/openai.yaml": "868748cd656e2ed69b94ed8dbe0f252a5311dbb47c4276b88b3b18a5cfa8f83f",
+    "skills/oms-outbound-batch/references/order-sheet.md": "783868aaf06b42ed0cfd2365476b1240195aa13b6e1a4cca1a68172a165fdc89",
+    "skills/oms-outbound-batch/references/outbound-operations.md": "675565e89d1bc65b85028ebeb290c2579db5124674a857203d6b8f7a03177b0a",
+    "skills/oms-outbound-batch/scripts/parse_order_sheet.py": "7095d7d7c18d04d27e5e4f2698363e1fc5fd5d78ac05ea82689ea8c1ea2a11f8",
+    "skills/oms-package-exception/SKILL.md": "c719e8f91dfc944a6f4caa3a99ec2c8d7539afaf9915097c9e5d1cc3c6e2f8e7",
+    "skills/oms-package-exception/agents/openai.yaml": "c6a30b0aff0b8d120d12d4c80e4fceb0e0a978454f82baff1437f339f0f270d8",
+    "skills/oms-package-exception/references/work-orders.md": "d32cd531d1bf3b7c0321521872a9b6b4b9c567d9bb93b8b4261d4166c1f986f9",
+    "skills/oms-return-recovery/SKILL.md": "d37a8f1f6a1043dda9d9477b7fd594c3ae778c844339fc5caa78e8a8de3d4a10",
+    "skills/oms-return-recovery/agents/openai.yaml": "95b637f591663549ff0286445830c967d5c7ee3ea651f761fc50382fe7c04247",
+    "skills/oms-return-recovery/references/return-operations.md": "79ccc7d9c501c80f49ec5b3157c2ada4460290320f936bc8cba68bc85cb0c19e"
+  },
+  "sourceFiles": {
+    "skills/oms-attachment-upload/SKILL.md": "50436fa15b01e01daa03b0e88a8d2b3245d545d63c061941fc8bf8feffe974cf",
+    "skills/oms-attachment-upload/agents/openai.yaml": "28b110f7241155896ef3528eb3dcb04fcf3bb9d80b66a83183ae995d83b4bf01",
+    "skills/oms-attachment-upload/scripts/upload_attachment.py": "a184aad8d5c8c7fd59ddc5843bf503f10240e4d2052f279a326443366cc9bdb3",
+    "skills/oms-inbound-managed/SKILL.md": "5e643012f2552057e44686b7756bc9737be0e6dfcf60c7a66e407c8661c21d73",
+    "skills/oms-inbound-managed/agents/openai.yaml": "541ebf2d1ecbf9cff06d75f0bdea518ce96794440920b1860943d33a60ae71ef",
+    "skills/oms-inventory-health/SKILL.md": "137ca3fd0a8436599318cecf895b301a829c8bf676ae7aac1fd8e34856f93c7c",
+    "skills/oms-inventory-health/agents/openai.yaml": "a86d9b6f011f575cfb34e8a11004dd65a5d7efaf59f495aadef734ee433e135e",
+    "skills/oms-order-query/SKILL.md": "0bd4f08f445ad4e4a8a9cbeb0810dcb95643494705e1ca8d202e53b722dcfc8b",
+    "skills/oms-order-query/agents/openai.yaml": "b7a3164d7bf44bb249e68e1860e0c8814f890b72f0dae6126a1dff78a70a8f3c",
+    "skills/oms-order-query/references/order-queries.md": "533bb7d002eca288bfc7731e2d3203dd58539eb00bb6e1e709353fac3a96fd11",
+    "skills/oms-order-query/references/query-catalog.md": "f12f2e9cd4ab7cce8f5a57293539944f0e08ffc5df3edbf3c8a479905c5ddb5e",
+    "skills/oms-outbound-batch/SKILL.md": "557726c4ef5bbadb1a6f9311084c614a03c6f07e00c8a6e16fb97feec5ef20aa",
+    "skills/oms-outbound-batch/agents/openai.yaml": "868748cd656e2ed69b94ed8dbe0f252a5311dbb47c4276b88b3b18a5cfa8f83f",
+    "skills/oms-outbound-batch/references/order-sheet.md": "783868aaf06b42ed0cfd2365476b1240195aa13b6e1a4cca1a68172a165fdc89",
+    "skills/oms-outbound-batch/references/outbound-operations.md": "675565e89d1bc65b85028ebeb290c2579db5124674a857203d6b8f7a03177b0a",
+    "skills/oms-outbound-batch/scripts/parse_order_sheet.py": "7095d7d7c18d04d27e5e4f2698363e1fc5fd5d78ac05ea82689ea8c1ea2a11f8",
+    "skills/oms-package-exception/SKILL.md": "c719e8f91dfc944a6f4caa3a99ec2c8d7539afaf9915097c9e5d1cc3c6e2f8e7",
+    "skills/oms-package-exception/agents/openai.yaml": "c6a30b0aff0b8d120d12d4c80e4fceb0e0a978454f82baff1437f339f0f270d8",
+    "skills/oms-package-exception/references/work-orders.md": "d32cd531d1bf3b7c0321521872a9b6b4b9c567d9bb93b8b4261d4166c1f986f9",
+    "skills/oms-return-recovery/SKILL.md": "d37a8f1f6a1043dda9d9477b7fd594c3ae778c844339fc5caa78e8a8de3d4a10",
+    "skills/oms-return-recovery/agents/openai.yaml": "95b637f591663549ff0286445830c967d5c7ee3ea651f761fc50382fe7c04247",
+    "skills/oms-return-recovery/references/return-operations.md": "79ccc7d9c501c80f49ec5b3157c2ada4460290320f936bc8cba68bc85cb0c19e"
+  },
+  "publicationAdjustments": {
+    "skills/oms-order-query/agents/openai.yaml": "Replace example reference number with user-provided reference prompt.",
+    "skills/oms-order-query/references/order-queries.md": "Replace example reference number with an explicit placeholder."
+  }
+}

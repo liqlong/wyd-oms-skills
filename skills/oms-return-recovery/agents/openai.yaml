@@ -1,0 +1,12 @@
+interface:
+  display_name: "OMS 招领中心"
+  short_description: "创建退件预报，每批5单看图认领，按用户明确指令提交上架或销毁并按需查看进度"
+  default_prompt: "使用 $oms-return-recovery 每批5单用图片表格浏览未认领退件，提示下一批；我选定后认领，再按我明确指定的方式提交处置并查看进度。"
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "oms"
+      description: "OMS 退件预报、图片查询、认领、处置指令及进度查询 MCP 服务"
+      transport: "streamable_http"
+policy:
+  allow_implicit_invocation: true

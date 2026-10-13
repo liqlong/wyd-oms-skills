@@ -1,0 +1,12 @@
+interface:
+  display_name: "OMS 一键批量发货调度"
+  short_description: "从订单表或聊天资料创建ToC及ToB订单，沿用默认值、补齐必填项并查询发货回执"
+  default_prompt: "使用 $oms-outbound-batch 整理我上传的订单表或聊天资料，采用OMS默认值并提醒缺项，确认后建单提交并汇总发货回执。"
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "oms"
+      description: "OMS 出库预检查、批量建单、取消及只读查询服务"
+      transport: "streamable_http"
+policy:
+  allow_implicit_invocation: true

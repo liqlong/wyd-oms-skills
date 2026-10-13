@@ -1,0 +1,12 @@
+interface:
+  display_name: "OMS 订单查询"
+  short_description: "按单号、参考号、SKU、日期和状态查询 OMS 订单及关联业务信息"
+  default_prompt: "使用 $oms-order-query 按我提供的参考号查询入库单状态。"
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "oms"
+      description: "OMS 只读查询 MCP 服务"
+      transport: "streamable_http"
+policy:
+  allow_implicit_invocation: true
