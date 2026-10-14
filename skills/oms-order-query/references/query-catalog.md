@@ -1,7 +1,8 @@
 # 查询目录
 
-本版本包含 52 个有效的只读 OMS OpenAPI 查询。先用 `describe_oms_query` 获取所选
-类型的实时参数 schema；下表用于路由选择，不替代 schema。不支持创建、提交或修改单据。
+本版本包含 52 个有效的只读 OMS OpenAPI 查询。入口Skill的快速路由可直接查询；
+表外参数和复杂筛选用 `describe_oms_query` 获取所选类型的实时schema，同一会话复用。
+下表用于路由选择，不替代schema。不支持创建、提交或修改单据。
 
 ## 单据
 

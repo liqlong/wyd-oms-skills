@@ -10,11 +10,15 @@ description: 通过 OMS MCP 办理入库预约、预约审核后的入库建单�
 工具名称可能包含 MCP 服务前缀。缺少工具时提示重新连接新版服务，不直接调用 OMS 或数据库。
 MCP 提供按需能力；持续跟踪、定时执行、看板接入和通知由 Agent 层按客户需要定制脚本。
 
+仅查预约状态时直接用 `inbound_appointment_query` 的 `inboundAppointmentNo` 或 `reference`；
+仅查入库状态时直接用 `inbound_inbound_query` 的 `inboundNo`（单号或参考号），不先查目录、仓库或写操作定义。
+其它只读查询字段不确定才查看schema，同一会话复用，翻页不重复获取。
+
 ## 整理预约和货物资料
 
 1. 查询 `common_get_warehouse_by_customer` 获取可用仓库；用户给仓库名称时匹配实际代码。
    SKU按需通过 `common_get_goods_info` 或商品详情核实，保留用户的箱号、托号、批次和序列号。
-   查询前使用 `describe_oms_query` 核对过滤字段，不猜测 SKU 或客户范围。
+   未知过滤字段使用 `describe_oms_query` 核对，同一会话复用；不猜测 SKU 或客户范围。
 2. 通过 `describe_oms_inbound_operation(operation)` 查看对应写操作的完整 `inputSchema`，
    严格按其字段、枚举和日期格式整理 `request`，不传凭据、`dataBelong` 或客户代码。
    业务信息不足时只询问本次必需内容，未明确的业务处理先询问用户。
@@ -68,6 +72,9 @@ MCP 提供按需能力；持续跟踪、定时执行、看板接入和通知由 
 
 `inbound_inbound_query` 用 `inboundNo` 查询单号或参考号；列表可用 `inbound_inbound_query_page`
 按 `billNum` 查询预约号、预约订单号、入库单号、柜号、跟踪号或参考号。
+仅展示列表当前页时，结果下主动说明本页实际条数、页码、实际返回的总数及是否还有下一页；
+有后续页提示可以说“下一页”，末页明确说明。分页信息缺失时说明后续页尚未确认，不编造总数。
+用户要求全部列表或完整明细时保留条件继续翻页并说明进度，不逐页等待用户指令。
 
 详情 `inboundStatus`：0待提交、1在途中、2收货中、3收货完成、4作废、5待处理、6处理中、
 7处理完成、8已生成上架单、9上架完成、10上架中、11待上架；未知值保留原码。

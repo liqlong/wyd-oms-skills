@@ -1,6 +1,7 @@
 # 常用订单查询
 
-先用 `describe_oms_query` 核对实际参数，再执行 `query_oms`。下列 JSON 是工具参数，
+入口Skill的快速路由可直接执行 `query_oms`；表外字段或复杂筛选先用 `describe_oms_query`
+核对实际参数，同一会话复用已取得的schema。下列 JSON 是工具参数，
 不是 OMS 加密信封；MCP 会负责认证和加解密。
 
 ## 入库单和预约
