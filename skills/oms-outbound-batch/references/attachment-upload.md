@@ -1,12 +1,10 @@
----
-name: oms-attachment-upload
-description: 将用户提供的工单附件、ToB附件或面单通过 OMS MCP 上传到统一文件服务，返回可用于 OMS 业务参数的文件名和地址；适用于用户上传实际文件或办理业务时需要补充附件的场景。
----
-
-# OMS 附件上传
+# 业务流程中的附件上传
 
 使用 `upload_oms_attachment`，工具名称可能带 MCP 服务前缀。
-上传能力属于 MCP 服务；本 Skill 读取用户文件并整理调用资料，不直接连接 OSS、OMS 或数据库。
+上传能力属于 MCP 服务；当前业务 Skill 读取用户文件并整理调用资料，不直接连接 OSS、OMS 或数据库。
+
+用户在工单或发货流程中提供附件时，由当前业务 Skill 完成上传并继续办理，
+不要求用户调用独立上传 Skill 或手工复制附件地址。
 
 ## 选择文件和用途
 
@@ -25,7 +23,7 @@ description: 将用户提供的工单附件、ToB附件或面单通过 OMS MCP �
 小文件可以直接调用工具；大文件用附带脚本把内容直接传给 MCP，避免把 Base64 写入对话或临时文件：
 
 ```bash
-python3 scripts/upload_attachment.py "/用户提供的实际路径/附件.png" --purpose WORK_ORDER --confirmed
+python3 "<当前Skill目录>/scripts/upload_attachment.py" "/用户提供的实际路径/附件.png" --purpose WORK_ORDER --confirmed
 ```
 
 脚本只使用Python 3标准库，读取 `OMS_MCP_URL`（含 `/mcp` 的完整服务地址）和
@@ -40,7 +38,8 @@ python3 scripts/upload_attachment.py "/用户提供的实际路径/附件.png" -
   将这两个字段放入目标 OMS 附件结构，其他字段按目标接口实时定义补齐。
   上传用途不是 `fileCategory`；不凭用途猜附件分类。
 - 上传成功只表示文件已存入文件服务，不代表工单或订单已创建，也不代表已在OMS关联附件。
-  继续创建业务单据应使用对应业务工具并沿用用户授权；未连接该能力时提供附件回执即可。
+  上传成功后由当前业务 Skill 继续填写附件参数和办理工单或发货，不把上传回执当作业务完成。
+  用户只要求上传附件时提供上传回执，不额外创建业务单据。
 - `ERROR`：展示失败原因，先处理配置或文件问题，不提交缺少必需附件的单据。
 - `UNKNOWN`：告知上传结果未确认，由用户决定核实或重新上传；不自动重试。
 - 不改写文件服务返回的域名，不拼接下载地址，不使用临时上传接口，不自动删除附件。

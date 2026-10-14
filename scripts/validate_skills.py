@@ -13,7 +13,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED_SKILLS = {
-    "oms-attachment-upload", "oms-inbound-managed", "oms-inventory-health",
+    "oms-inbound-managed", "oms-inventory-health",
     "oms-order-query", "oms-outbound-batch", "oms-package-exception", "oms-return-recovery",
 }
 
@@ -29,7 +29,7 @@ def validate():
     require(f"## {version} - " in (ROOT / "CHANGELOG.md").read_text(encoding="utf-8"),
             "Current version must appear in CHANGELOG.md")
     skills = {p.name: p for p in (ROOT / "skills").iterdir() if p.is_dir()}
-    require(set(skills) == EXPECTED_SKILLS, "Expected all seven OMS skills")
+    require(set(skills) == EXPECTED_SKILLS, "Expected all six OMS skills")
     license_text = (ROOT / "LICENSE").read_bytes()
     for name, folder in sorted(skills.items()):
         text = (folder / "SKILL.md").read_text(encoding="utf-8")
@@ -92,7 +92,11 @@ def validate():
         text = path.read_text(encoding="utf-8")
         require(not re.search(r"/(?:Users|Volumes)/[^\s)`]+", text),
                 f"Workstation path in public document: {path.relative_to(ROOT)}")
-        for target in re.findall(r"!?\[[^\]]*\]\(([^\s)]+)\)", text):
+        # Markdown examples describe paths that only exist during a user's session.
+        # Check real document links, excluding fenced examples and inline code.
+        link_text = re.sub(r"(?ms)^```[^\n]*\n.*?^```[ \t]*$", "", text)
+        link_text = re.sub(r"`+[^`]*`+", "", link_text)
+        for target in re.findall(r"!?\[[^\]]*\]\(([^\s)]+)\)", link_text):
             parsed = urlsplit(target)
             if parsed.scheme or target.startswith("#"):
                 continue

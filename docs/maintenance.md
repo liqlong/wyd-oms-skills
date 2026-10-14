@@ -36,7 +36,7 @@ python3 -m venv /tmp/wyd-oms-skills-validate
 1. 完成本地校验，更新 `VERSION` 并与全部发布内容一同提交到 `main`。
 2. `VERSION` 在 `main` 上变化时自动触发 Release 工作流；首次提交也会触发。
 3. Release 工作流再次校验并构建 ZIP、TAR.GZ 及 `SHA256SUMS`，在该提交创建版本标签和 GitHub Release。
-4. 从 Release 下载实际包，核对校验值、7 个 Skill 及资源完整性，再验证公开仓库的安装。
+4. 从 Release 下载实际包，核对校验值、6 个 Skill 及资源完整性，再验证公开仓库的安装。
 
 工作流只将 `skills/`、安装文档、许可、版本、更新记录和来源快照打包。
 下载包不包含维护依赖、CI 配置、凭据或本机临时验证资料。

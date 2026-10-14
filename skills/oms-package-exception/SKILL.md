@@ -6,7 +6,7 @@ description: 通过 OMS MCP 办理包裹拦截、地址更正和包裹调查工�
 # OMS 包裹异常工单管家
 
 使用 `describe_oms_package_exception_operation`、`create_oms_package_exception`、
-`submit_oms_package_exception`，查询使用 `describe_oms_query` 和 `query_oms`。
+`submit_oms_package_exception`，查询使用 `describe_oms_query` 和 `query_oms`，附件上传使用 `upload_oms_attachment`。
 工具可能带 MCP 服务名前缀；缺少时提示连接新版服务，不调用 OMS Web 或数据库。
 只办理包裹拦截、地址更正和包裹调查。接口名称及枚举见 [工单说明](references/work-orders.md)。
 
@@ -21,7 +21,9 @@ description: 通过 OMS MCP 办理包裹拦截、地址更正和包裹调查工�
   收件人、电话、国家等其他字段按用户实际更正内容填写，不自行从旧地址补齐或更改用户未指定的资料。
   展示拟提交的新收件信息，明确提醒用户核对。
 - 三类工单都至少需要一个附件，最多五个。已有可用URL可直接使用；实际文件通过
-  `$oms-attachment-upload` 的 `WORK_ORDER` 上传，取得原始文件名和真实URL后填写 `orderFileList`。
+  当前Skill按 [附件上传说明](references/attachment-upload.md) 调用 `upload_oms_attachment`，
+  用途为 `WORK_ORDER`，取得原始文件名和真实URL后填写 `orderFileList` 并继续办理。
+  大文件使用当前Skill自带的上传脚本，不要求用户安装或切换到独立上传Skill。
   上传失败或结果未确认时，先补齐附件，不提交缺少必需附件的工单。
   `chat` 是上传业务标识，不是 `fileCategory`；附件分类可省略，明确需要分类时按实际内容填写。
 

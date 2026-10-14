@@ -103,7 +103,7 @@ class McpUploadClient:
             "params": {
                 "protocolVersion": PROTOCOL_VERSION,
                 "capabilities": {},
-                "clientInfo": {"name": "oms-attachment-upload", "version": "1.0.0"},
+                "clientInfo": {"name": "oms-business-attachment-upload", "version": "1.0.0"},
             },
         })
         version = initialized.get("protocolVersion")

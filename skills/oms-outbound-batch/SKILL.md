@@ -6,7 +6,8 @@ description: 通过 OMS MCP 创建单笔或批量 ToC、ToB 发货订单，支�
 # OMS 一键批量发货调度
 
 使用 `describe_oms_outbound_operation`、`prepare_oms_outbound_batch`、
-`create_oms_outbound_batch`、`cancel_oms_outbound`，查询使用现有 `describe_oms_query`、`query_oms`。
+`create_oms_outbound_batch`、`cancel_oms_outbound`，查询使用现有 `describe_oms_query`、`query_oms`，
+附件上传使用 `upload_oms_attachment`。
 工具名称可能包含 MCP 服务前缀；缺少工具时提示连接新版服务，不自行调用 OMS 或数据库。
 单笔订单使用只有一项的 `orders`，与批量订单使用相同校验和确认流程。
 
@@ -18,7 +19,9 @@ description: 通过 OMS MCP 创建单笔或批量 ToC、ToB 发货订单，支�
 - 用户在聊天中提供资料：直接整理成对应 OMS 参数对象，不要求先生成或上传表格。
   可将对话中明确适用于整批的国家、平台、仓库、物流方式等用于各单；单笔明确值优先。
   收件人地址、电话、SKU、数量、参考号不得凭空补齐。附件不是必需入口条件，用户选择自上传面单等场景时才要求对应附件。
-  用户提供实际面单或ToB附件时，使用 `$oms-attachment-upload` 上传并取回真实地址；
+  用户提供实际面单或ToB附件时，当前Skill按 [附件上传说明](references/attachment-upload.md)
+  调用 `upload_oms_attachment` 上传并取回真实地址，再继续整理建单参数；
+  大文件使用当前Skill自带的上传脚本，不要求用户安装或切换到独立上传Skill。
   面单用 `SHIPPING_LABEL`，ToB附件用 `TOB_ATTACHMENT`。上传失败时先补齐附件，不用本地路径代替URL。
 - 同一批混有 ToC、ToB 时按类型分组，保留原序号。整张表全部预检查通过之前不创建任何一组。
   在聊天中继续补充的资料可以用于修正表格缺项，不要求用户反复改表。

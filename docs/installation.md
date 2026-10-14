@@ -98,6 +98,9 @@ Token 仅保存在自己的客户端配置或本机环境，不写入本仓库�
 辅助脚本使用说明位于相应 Skill：订单表脚本需要 `--order-type TOC` 或 `TOB`；
 附件上传脚本需要设置 `OMS_MCP_URL`（完整 `/mcp` 地址）和 `OMS_MCP_TOKEN`。
 两者必须与已授权的 MCP 连接一致，只有用户已授权上传时才执行上传脚本。
+批量发货及包裹异常工单的上传脚本位于各自的 `scripts/upload_attachment.py`。
+招领中心的 `scripts/prepare_return_previews.py` 将当前页图片缓存到本机供链接预览，
+只需要查询结果和本机脚本执行能力，不需要额外 Token；详见对应 Skill 的图片预览说明。
 
 ## 5. 更新与排查
 
@@ -111,7 +114,7 @@ Token 仅保存在自己的客户端配置或本机环境，不写入本仓库�
 | Skill 未出现 | 核对目录和客户端版本，重新开启会话或重启 |
 | MCP 认证失败 | 核对业务方提供的地址、原始 Token 及启用状态 |
 | 缺少业务工具 | 部署相应版本的 OMS MCP，再重新连接 |
-| 退件图片未展示 | 核对 `view_oms_return_image` 和客户端图片块支持；保留原图链接 |
+| 退件图片链接无法预览 | 核对 Python 3、本机脚本执行能力及图片缓存路径；客户端不支持时保留原文件链接 |
 | 文件脚本无法运行 | 安装 Python 3，并从 Skill 目录执行或使用脚本绝对路径 |
 
 参考：[OpenAI 官方 Skills 文档](https://learn.chatgpt.com/docs/build-skills)、

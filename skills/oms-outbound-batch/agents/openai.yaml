@@ -6,7 +6,7 @@ dependencies:
   tools:
     - type: "mcp"
       value: "oms"
-      description: "OMS 出库预检查、批量建单、取消及只读查询服务"
+      description: "OMS 出库预检查、批量建单、取消、附件上传及只读查询服务"
       transport: "streamable_http"
 policy:
   allow_implicit_invocation: true
