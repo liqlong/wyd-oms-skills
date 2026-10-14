@@ -4,7 +4,19 @@ on:
   push:
     branches: [main]
     tags: ['v*']
-    paths: [VERSION]
+    paths:
+      - 'skills/**'
+      - 'docs/**'
+      - 'scripts/**'
+      - README.md
+      - SOURCE.json
+      - VERSION
+      - requirements-dev.txt
+      - '.github/workflows/release.yml'
+
+concurrency:
+  group: oms-skills-release
+  cancel-in-progress: false
 
 permissions:
   contents: read
@@ -12,6 +24,8 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    env:
+      DEVELOPMENT_RELEASE: 'true'
     permissions:
       contents: write
     steps:
@@ -45,15 +59,22 @@ jobs:
             const path = require('path');
             const version = fs.readFileSync('VERSION', 'utf8').trim();
             const tag = `v${version}`;
-            const changelog = fs.readFileSync('CHANGELOG.md', 'utf8');
-            const section = changelog.split(`## ${version} - `)[1];
-            const notes = section.slice(section.indexOf('\n') + 1).split('\n## ')[0].trim();
+            const development = process.env.DEVELOPMENT_RELEASE === 'true';
+            let notes;
+            if (development) {
+              notes = '开发阶段初始版本，持续同步仓库 main 的最新 Skills，尚未进入稳定交付阶段。';
+            } else {
+              const changelog = fs.readFileSync('CHANGELOG.md', 'utf8');
+              const section = changelog.split(`## ${version} - `)[1];
+              notes = section.slice(section.indexOf('\n') + 1).split('\n## ')[0].trim();
+            }
+            const body = notes + '\n\n下载 ZIP 或 TAR.GZ，并使用 SHA256SUMS 核对完整性。\n许可：仅允许安装与使用，不授予修改与再分发权。';
             const prefix = `wyd-oms-skills-${tag}`;
             const files = [`${prefix}.zip`, `${prefix}.tar.gz`, 'SHA256SUMS'];
             let release;
             try {
               release = (await github.rest.repos.getReleaseByTag({...context.repo, tag})).data;
-              if (!release.draft) {
+              if (!release.draft && !development) {
                 core.info('Release is already published; preserving immutable version assets');
                 return;
               }
@@ -61,10 +82,14 @@ jobs:
               if (error.status !== 404) throw error;
               release = (await github.rest.repos.createRelease({
                 ...context.repo, tag_name: tag, target_commitish: context.sha, name: `${tag} — WYD OMS Skills`,
-                body: notes + '\n\n下载 ZIP 或 TAR.GZ，并使用 SHA256SUMS 核对完整性。\n许可：仅允许安装与使用，不授予修改与再分发权。',
+                body,
                 draft: true, prerelease: false
               })).data;
             }
+            await github.rest.repos.updateRelease({
+              ...context.repo, release_id: release.id, draft: true,
+              name: `${tag} — WYD OMS Skills`, body
+            });
             for (const name of files) {
               const data = fs.readFileSync(path.join('dist', name));
               const existing = release.assets.find(asset => asset.name === name);
@@ -73,6 +98,23 @@ jobs:
                 ...context.repo, release_id: release.id, name, data,
                 headers: {'content-type': 'application/octet-stream', 'content-length': data.length}
               });
+            }
+            if (development) {
+              const newTag = (await github.rest.git.createTag({
+                ...context.repo, tag, message: `WYD OMS Skills ${tag}: development initial release`,
+                object: context.sha, type: 'commit'
+              })).data;
+              try {
+                await github.rest.git.getRef({...context.repo, ref: `tags/${tag}`});
+                await github.rest.git.updateRef({
+                  ...context.repo, ref: `tags/${tag}`, sha: newTag.sha, force: true
+                });
+              } catch (error) {
+                if (error.status !== 404) throw error;
+                await github.rest.git.createRef({
+                  ...context.repo, ref: `refs/tags/${tag}`, sha: newTag.sha
+                });
+              }
             }
             await github.rest.repos.updateRelease({
               ...context.repo, release_id: release.id, draft: false, make_latest: 'true'

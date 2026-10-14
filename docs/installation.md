@@ -19,10 +19,10 @@ npx skills@1.7.2 add liqlong/wyd-oms-skills --skill '*' --agent codex --global
 安装程序会提示安装方式；推荐保留完整文件夹。执行前查看已有安装，不覆盖其他同名 Skill。
 省略 `--global` 可安装到当前项目。只安装一个 Skill 时，将 `'*'` 换成其名称。
 
-安装固定的 `v1.0.1`：
+安装固定的 `v1.0.0`：
 
 ```bash
-npx skills@1.7.2 add https://github.com/liqlong/wyd-oms-skills/tree/v1.0.1/skills --skill '*' --agent codex --global
+npx skills@1.7.2 add https://github.com/liqlong/wyd-oms-skills/tree/v1.0.0/skills --skill '*' --agent codex --global
 ```
 
 每个 Skill 文件夹都包含 [LICENSE](../LICENSE)，安装和备份时请一并保留。
@@ -30,11 +30,11 @@ npx skills@1.7.2 add https://github.com/liqlong/wyd-oms-skills/tree/v1.0.1/skill
 ### 手动安装及国内下载
 
 1. 从 [Releases](https://github.com/liqlong/wyd-oms-skills/releases) 下载
-   `wyd-oms-skills-v1.0.1.zip` 或 `.tar.gz`，以及 `SHA256SUMS`。
+   `wyd-oms-skills-v1.0.0.zip` 或 `.tar.gz`，以及 `SHA256SUMS`。
 2. 在下载目录核对 SHA-256，然后解压版本包。例如 macOS：
 
    ```bash
-   shasum -a 256 wyd-oms-skills-v1.0.1.zip
+   shasum -a 256 wyd-oms-skills-v1.0.0.zip
    ```
 
    将输出与 `SHA256SUMS` 中该文件对应的值比较。
@@ -46,7 +46,7 @@ npx skills@1.7.2 add https://github.com/liqlong/wyd-oms-skills/tree/v1.0.1/skill
 也可克隆官方仓库后按相同方式复制或创建本机软链接：
 
 ```bash
-git clone --branch v1.0.1 --depth 1 https://github.com/liqlong/wyd-oms-skills.git
+git clone --branch v1.0.0 --depth 1 https://github.com/liqlong/wyd-oms-skills.git
 ```
 
 网络无法访问 GitHub 时，请向维护者索取同版本包及校验值。
@@ -106,7 +106,7 @@ Token 仅保存在自己的客户端配置或本机环境，不写入本仓库�
 
 自动安装可使用 `npx skills@1.7.2 update -g`，按提示选择要更新的 Skills；
 此命令会检查全部全局安装项目，注意核对选择。固定版本用户可下载新版包后完整替换相应目录。
-更新前查看 [CHANGELOG](../CHANGELOG.md)，并核对新版 MCP 工具要求。
+开发阶段统一使用初始版本 `v1.0.0`，版本包会持续刷新。更新前查看仓库说明，并核对当前 MCP 工具要求。
 
 | 问题 | 处理方式 |
 | --- | --- |

@@ -5,6 +5,8 @@
 
 通过自然语言查询 OMS 订单、分析库存，以及办理入库、出库、退件、附件和包裹异常工单。
 本仓库发布 `oms-mcp-server` 配套的全部 6 个 Agent Skills，包含业务指引、引用文档和辅助脚本。
+目前处于开发阶段，统一使用初始版本 `v1.0.0`，暂不升级版本号或维护更新记录。
+仓库 `main` 和初始版本下载包会持续同步最新 Skills，尚未进入稳定交付阶段。
 
 **使用前需要连接已授权的 OMS MCP 服务。** Skill 安装不会部署服务或自动取得业务权限。
 本仓库采用[安装与使用许可](LICENSE)，不授予修改、再分发或再许可权利。
@@ -78,7 +80,7 @@ Skills 按实际分页信息连续读取并报告进度，分页信息缺失时�
 - 辅助脚本只需要 Python 3 标准库。订单表脚本离线整理资料；附件上传脚本需要
   与 MCP 连接一致的 `OMS_MCP_URL` 和 `OMS_MCP_TOKEN`。
 
-版本变化见 [CHANGELOG.md](CHANGELOG.md)，当前版本见 [VERSION](VERSION)。
+当前初始版本见 [VERSION](VERSION)。
 发布快照信息见 [SOURCE.json](SOURCE.json)。维护流程见[发布维护指南](docs/maintenance.md)。
 
 ## 反馈与许可
