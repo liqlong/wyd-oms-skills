@@ -1,6 +1,6 @@
 # 退件操作、状态和数量口径
 
-先用 `describe_oms_return_operation` 查看实时参数定义；查询先用 `describe_oms_query`。
+写操作先用 `describe_oms_return_operation` 查看实时参数定义；已知查询直接执行，未知字段才用 `describe_oms_query`。
 
 | 业务动作 | MCP工具/查询 | OMS OpenAPI |
 | --- | --- | --- |

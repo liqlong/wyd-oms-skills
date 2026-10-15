@@ -1,18 +1,28 @@
 ---
 name: oms-package-exception
-description: 通过 OMS MCP 办理包裹拦截、地址更正和包裹调查工单，收集订单、跟踪号、附件及改址资料，用户确认后创建或提交，并按需查询工单状态和处理反馈。
+description: 通过 OMS MCP 办理包裹拦截、地址更正和包裹调查三类工单的新增、修改、删除、提交及分页查询；收集订单、跟踪号、附件和业务资料，按用户明确授权办理并查询处理反馈。
 ---
 
 # OMS 包裹异常工单管家
 
 使用 `describe_oms_package_exception_operation`、`create_oms_package_exception`、
-`submit_oms_package_exception`，查询使用 `describe_oms_query` 和 `query_oms`，附件上传使用 `upload_oms_attachment`。
+`submit_oms_package_exception`、`update_oms_address_correction`、`delete_oms_address_correction`，
+拦截修改/删除使用 `update_oms_package_interception`、`delete_oms_package_interception`，
+调查修改/删除使用 `update_oms_package_trace`、`delete_oms_package_trace`；
+查询使用 `describe_oms_query` 和 `query_oms`，附件上传使用 `upload_oms_attachment`。
 工具可能带 MCP 服务名前缀；缺少时提示连接新版服务，不调用 OMS Web 或数据库。
 只办理包裹拦截、地址更正和包裹调查。接口名称及枚举见 [工单说明](references/work-orders.md)。
 
 已知订单类型及单号/参考号时，直接用 `query_oms` 查详情：ToC使用 `outbound_to_c_query` 的
 `orderNo` 或 `reference`，ToB使用 `outbound_tob_query` 的 `orderNo`，不先获取查询目录。
 只读查询字段不确定才获取schema，同一会话复用；写操作仍核对完整定义并沿用用户授权。
+
+新任务只查工单状态时优先只读查询；办理三类异常工单或查询本流程的处理进度时使用本Skill。
+用户要求修改或删除已有地址更正工单时，读取 [地址更正修改与删除](references/address-correction-changes.md)，
+修改或删除包裹拦截、调查工单时，读取 [拦截与调查修改删除](references/package-changes.md)。
+均使用原服务工单号办理，不按新增流程另建工单；仅查询或创建授权不包含修改、删除授权。
+回执保留本次工单类型、真实服务工单号、提交/草稿方式、OMS结果及后续需补充或核实的事项；
+工单提交成功不能说成承运商已拦截、改址或调查完成。
 
 ## 整理办理资料
 
@@ -24,7 +34,8 @@ description: 通过 OMS MCP 办理包裹拦截、地址更正和包裹调查工�
 - 拦截和调查需要说明。改址需要用户提供新地址，并按接口要求补齐地址1、邮编、城市、州/省。
   收件人、电话、国家等其他字段按用户实际更正内容填写，不自行从旧地址补齐或更改用户未指定的资料。
   展示拟提交的新收件信息，明确提醒用户核对。
-- 三类工单都至少需要一个附件，最多五个。已有可用URL可直接使用；实际文件通过
+- 三类工单创建时都至少需要一个附件，最多五个。三类修改时附件可省略或传0至5个，按专门流程核对。
+  已有可用URL可直接使用；实际文件通过
   当前Skill按 [附件上传说明](references/attachment-upload.md) 调用 `upload_oms_attachment`，
   用途为 `WORK_ORDER`，取得原始文件名和真实URL后填写 `orderFileList` 并继续办理。
   大文件使用当前Skill自带的上传脚本，不要求用户安装或切换到独立上传Skill。

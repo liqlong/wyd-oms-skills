@@ -6,10 +6,23 @@
 | 地址更正 | `create_oms_address_correction` | `submit_oms_address_correction` | `csc_address_correction_page_query` |
 | 包裹调查 | `create_oms_package_trace` | `submit_oms_package_trace` | `csc_package_trace_page_query` |
 
+三类另支持以下修改、删除工具，路径前缀同为 `/openapi/csc/v2`，后缀为对应类型的 `/edit`、`/delete`。
+
+| 工单类型 | 修改工具 | 删除工具 |
+| --- | --- | --- |
+| 包裹拦截 | `update_oms_package_interception` | `delete_oms_package_interception` |
+| 地址更正 | `update_oms_address_correction` | `delete_oms_address_correction` |
+| 包裹调查 | `update_oms_package_trace` | `delete_oms_package_trace` |
+
+地址更正按 [改址流程](address-correction-changes.md)，拦截、调查按 [包裹流程](package-changes.md) 办理。
+均使用已有服务工单号，不能套用新增的业务订单清单；修改明确 `submitFlag`，附件可省略或传0至5个。
+地址更正修改必需新地址，调查修改必需调查类型及非空说明，拦截修改的说明可省略。
+删除只传服务工单号。状态资格由OMS校验，不在MCP中臆造可修改/删除状态范围。
+
 写操作全部通过 `/openapi/csc/v2/` 接入，不使用Web内部接口。
 用 `describe_oms_package_exception_operation` 查看当前字段定义，不能只根据本参考猜参数。
 
-`submitFlag=1` 仅保存，`submitFlag=2` 创建并提交，默认2。
+创建时 `submitFlag=1` 仅保存、2创建并提交，默认2；修改时必须明确1仅保存修改或2修改并提交，无默认值。
 `orderStatus=1` 是工单待提交，不能与业务订单的待提交状态0混用。
 
 三类工单的状态1待提交、2待处理、3提交服务商、4处理成功、5处理失败、9处理中、

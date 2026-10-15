@@ -20,7 +20,7 @@
 | [oms-inbound-managed](skills/oms-inbound-managed/SKILL.md) | 智能入库 | 办理入库预约、审核后建单、提交及进度查询 |
 | [oms-outbound-batch](skills/oms-outbound-batch/SKILL.md) | 批量发货 | 从 XLSX/CSV 或聊天资料办理 ToC/ToB 发货，上传面单及附件，查询回执及取消 |
 | [oms-return-recovery](skills/oms-return-recovery/SKILL.md) | 招领中心 | 退件预报、每批 5 单清单及图片预览、认领和明确指令下的处置 |
-| [oms-package-exception](skills/oms-package-exception/SKILL.md) | 包裹异常工单 | 上传工单附件，办理拦截、地址更正、包裹调查及查看反馈 |
+| [oms-package-exception](skills/oms-package-exception/SKILL.md) | 包裹异常工单 | 上传工单附件，新增、修改、删除和提交拦截、地址更正、包裹调查工单，查看反馈 |
 
 ## 快速安装
 
@@ -74,7 +74,10 @@ Skills 按实际分页信息连续读取并报告进度，分页信息缺失时�
 - 客户端须支持 Agent Skills，并能连接 OMS MCP 的 Streamable HTTP 服务。
 - `agents/openai.yaml` 中的 MCP 依赖名称为 `oms`；Codex 配置使用 `mcp_servers.oms`。
 - 服务须提供对应 Skill 使用的工具及实时参数定义，业务范围由 MCP 认证决定。
-- Codex 桌面端招领中心通过配套脚本将当前页图片缓存到本机，在清单中提供“预览图片”链接，
+  包裹异常工单的修改、删除需要服务提供 `update_oms_address_correction`、`delete_oms_address_correction`、
+  `update_oms_package_interception`、`delete_oms_package_interception`、`update_oms_package_trace`、
+  `delete_oms_package_trace`；安装 Skill 不会自动升级 MCP 服务。
+- Codex 桌面端招领中心通过配套脚本将当前页图片缓存到本机，在清单中同时提供“预览图片”和“原文件”链接，
   默认不展开图片；模型读图可按需使用 `view_oms_return_image`。其他客户端按实际支持提供图片链接。
   本地图片缓存只读取查询返回的文件地址，不需要另行提供 Token；无法预览时保留原文件链接。
 - 辅助脚本只需要 Python 3 标准库。订单表脚本离线整理资料；附件上传脚本需要
