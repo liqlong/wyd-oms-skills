@@ -17,7 +17,8 @@
 地址更正按 [改址流程](address-correction-changes.md)，拦截、调查按 [包裹流程](package-changes.md) 办理。
 均使用已有服务工单号，不能套用新增的业务订单清单；修改明确 `submitFlag`，附件可省略或传0至5个。
 地址更正修改必需新地址，调查修改必需调查类型及非空说明，拦截修改的说明可省略。
-删除只传服务工单号。状态资格由OMS校验，不在MCP中臆造可修改/删除状态范围。
+删除只传服务工单号。地址更正删除仅允许 `orderStatus=1`（待提交），其他或未知状态在MCP拦截，不调用OMS删除接口；
+其他修改/删除操作的状态资格继续由OMS校验。
 
 写操作全部通过 `/openapi/csc/v2/` 接入，不使用Web内部接口。
 用 `describe_oms_package_exception_operation` 查看当前字段定义，不能只根据本参考猜参数。
